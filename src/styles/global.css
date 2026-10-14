@@ -101,6 +101,7 @@ a:hover { color: var(--ink); text-decoration-color: var(--ink); }
   text-decoration: none;
 }
 a.tag:hover { background: var(--mustard); color: var(--bar); }
+.band .tag { color: var(--bar); }
 
 .btn {
   display: inline-block;
