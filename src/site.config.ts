@@ -9,10 +9,10 @@ export const SITE = {
 
 export const AUTHOR = {
   name: 'Hrishikesh Chakrapani',
-  role: 'Principal Engineer at HPE',
+  role: 'AI Engineer',
   // Short bio. The first paragraph also appears on the home page.
   bio: [
-    "I read papers for fun and build agents for work. I'm a principal engineer at HPE, with a classical machine learning background and three years in generative AI.",
+    "I read papers for fun and build agents for work. I'm an AI engineer with a classical machine learning background and three years in generative AI.",
     'Day to day I work on agentic systems, large language models and new AI systems, and I follow new model architectures, training methods and model families closely. This blog is where I write down what I learn.',
   ],
   // Areas listed under "What I work on" on the About page.
@@ -22,7 +22,7 @@ export const AUTHOR = {
     { title: 'New AI systems', text: 'Evaluating and adopting new models and approaches as they arrive.' },
     { title: 'Classical ML roots', text: 'Bringing lessons from traditional machine learning into generative AI.' },
   ],
-  why: "AI moves fast. New model families, training methods and agent patterns show up every few weeks, and most writing about them is either hype or theory. I wanted one place to write down what I learn as I build and read: what works, why it works, and what didn't, so others can learn faster too.",
+  why: "This blog is written for engineers. Agents and new models are changing how we build software, and most writing about them is either hype or theory. Here I share practical notes from building and reading: what works, why it works, what didn't, and what I'd do differently, so you can adopt these tools with fewer surprises.",
   links: {
     linkedin: 'https://www.linkedin.com/in/hrishikeshbharadwaj',
     website: 'https://hrishikesh-chakrapani.carrd.co/',
