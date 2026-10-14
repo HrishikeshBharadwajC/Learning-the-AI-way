@@ -1,0 +1,67 @@
+---
+import type { Post } from '../utils';
+import { formatDate, isoDate, readingStats, slugifyTag } from '../utils';
+
+interface Props { posts: Post[] }
+const { posts } = Astro.props;
+---
+
+{posts.length === 0 ? (
+  <p class="empty">No posts yet. The first one is on its way.</p>
+) : (
+  <ol class="posts">
+    {posts.map((post) => {
+      const { minutes } = readingStats(post.body);
+      return (
+        <li>
+          <article>
+            <p class="meta">
+              <time datetime={isoDate(post.data.date)}>{formatDate(post.data.date)}</time>
+              <span aria-hidden="true"> · </span>{minutes} min read
+              {post.data.draft && <span class="draft">draft</span>}
+            </p>
+            <h3><a href={`/blog/${post.id}/`}>{post.data.title}</a></h3>
+            <p class="desc">{post.data.description}</p>
+            {post.data.tags.length > 0 && (
+              <ul class="tags">
+                {post.data.tags.map((t) => <li><a href={`/tags/${slugifyTag(t)}/`}>#{t}</a></li>)}
+              </ul>
+            )}
+          </article>
+        </li>
+      );
+    })}
+  </ol>
+)}
+
+<style>
+  .posts { list-style: none; margin: 0; padding: 0; display: grid; }
+  .posts > li { padding-block: 1.5rem; border-top: 1px solid var(--rule); }
+  .posts > li:last-child { border-bottom: 1px solid var(--rule); }
+  article { display: grid; gap: 0.4rem; max-width: var(--measure); }
+  article p { margin: 0; }
+  h3 { font-size: var(--step-1); }
+  h3 a { color: var(--ink); text-decoration: none; }
+  h3 a:hover { color: var(--accent); }
+  .desc { color: var(--muted); }
+  .tags { list-style: none; margin: 0.2rem 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .tags a {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--accent);
+    background: var(--accent-soft);
+    padding: 0.1rem 0.45rem;
+    border-radius: 4px;
+    text-decoration: none;
+  }
+  .draft {
+    margin-left: 0.5rem;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    border: 1px solid currentColor;
+    padding: 0 0.3rem;
+    border-radius: 3px;
+  }
+  .empty { color: var(--muted); }
+</style>

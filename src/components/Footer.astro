@@ -1,0 +1,31 @@
+---
+import { SITE, AUTHOR } from '../site.config';
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="frame row">
+    <p class="meta">© {year} {AUTHOR.name} · {SITE.title}</p>
+    <ul class="links">
+      <li><a href={AUTHOR.links.linkedin} rel="me noopener" target="_blank">LinkedIn</a></li>
+      <li><a href={AUTHOR.links.website} rel="me noopener" target="_blank">Website</a></li>
+      <li><a href="/rss.xml">RSS</a></li>
+    </ul>
+  </div>
+</footer>
+
+<style>
+  .site-footer { border-top: 1px solid var(--rule); margin-top: 5rem; }
+  .row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    padding-block: 1.75rem;
+  }
+  .row p { margin: 0; }
+  .links { list-style: none; margin: 0; padding: 0; display: flex; gap: 1.25rem; }
+  .links a { font-family: var(--font-mono); font-size: 0.8rem; color: var(--muted); text-decoration: none; }
+  .links a:hover { color: var(--accent); }
+</style>

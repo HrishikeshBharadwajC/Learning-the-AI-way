@@ -1,0 +1,141 @@
+---
+import Base from '../layouts/Base.astro';
+import PostList from '../components/PostList.astro';
+import { SITE, AUTHOR } from '../site.config';
+import { getPosts } from '../utils';
+
+const posts = (await getPosts()).slice(0, 5);
+
+const topics = [
+  { name: 'Everyday AI', text: 'How I use assistants to plan, write, research and decide, outside of work.' },
+  { name: 'Building with LLMs', text: 'Prompts, evals, retrieval and agents, written up from real projects.' },
+  { name: 'Tools & workflows', text: 'The editors, CLIs and automations that save me hours each week.' },
+  { name: 'Learning faster', text: 'Using AI as a tutor to pick up new fields without fooling myself.' },
+];
+---
+
+<Base>
+  <section class="hero frame">
+    <p class="label">Field notes from an AI engineer</p>
+    <h1>{SITE.title}</h1>
+    <p class="prompt" aria-label="What did I learn about AI this week?">
+      <span class="caret" aria-hidden="true">&gt;</span>
+      <span>what did I learn about AI this week?</span><span class="cursor" aria-hidden="true"></span>
+    </p>
+    <p class="lede">{SITE.tagline} Written by {AUTHOR.name}.</p>
+    <div class="actions">
+      <a class="btn primary" href="/blog/">Read the blog</a>
+      <a class="btn" href="/about/">About me</a>
+    </div>
+  </section>
+
+  <section class="frame block" aria-labelledby="latest">
+    <div class="head">
+      <h2 id="latest">Latest writing</h2>
+      <a class="meta" href="/blog/">All posts →</a>
+    </div>
+    <PostList posts={posts} />
+  </section>
+
+  <section class="frame block" aria-labelledby="topics">
+    <h2 id="topics">What I write about</h2>
+    <ul class="topics">
+      {topics.map((t) => (
+        <li>
+          <h3>{t.name}</h3>
+          <p>{t.text}</p>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="frame block" aria-labelledby="author">
+    <div class="author">
+      <div>
+        <p class="label">Who's writing</p>
+        <h2 id="author">{AUTHOR.name}</h2>
+        <p class="role">{AUTHOR.role}</p>
+      </div>
+      <div class="author-body">
+        <p>{AUTHOR.bio[0]}</p>
+        <p class="links">
+          <a href="/about/">More about me</a>
+          <a href={AUTHOR.links.linkedin} target="_blank" rel="me noopener">LinkedIn ↗</a>
+          <a href={AUTHOR.links.website} target="_blank" rel="me noopener">Personal site ↗</a>
+        </p>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hero { padding-block: clamp(3rem, 9vw, 6rem) clamp(2rem, 5vw, 3rem); display: grid; gap: 1rem; }
+  .hero p { margin: 0; }
+  h1 { font-size: var(--step-4); font-weight: 700; letter-spacing: -0.03em; max-width: 14ch; }
+  .prompt {
+    font-family: var(--font-mono);
+    font-size: clamp(0.95rem, 2.4vw, 1.15rem);
+    color: var(--ink);
+    display: flex;
+    align-items: baseline;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+  }
+  .caret { color: var(--accent); font-weight: 500; }
+  .cursor {
+    display: inline-block;
+    width: 0.55em;
+    height: 1.1em;
+    margin-left: -0.45rem;
+    background: var(--accent);
+    transform: translateY(0.2em);
+    animation: blink 1.1s steps(1) infinite;
+  }
+  @keyframes blink { 50% { opacity: 0; } }
+  .lede { font-size: var(--step-1); color: var(--muted); max-width: 36rem; line-height: 1.5; }
+  .actions { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 0.5rem; }
+  .btn {
+    font-family: var(--font-display);
+    font-weight: 500;
+    padding: 0.6rem 1.1rem;
+    border-radius: var(--radius);
+    border: 1px solid var(--rule);
+    background: var(--surface);
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .btn:hover { border-color: var(--accent); }
+  .btn.primary { background: var(--accent); border-color: var(--accent); color: var(--paper); }
+  .btn.primary:hover { filter: brightness(1.08); }
+
+  .block { padding-block: 2.5rem; display: grid; gap: 1.25rem; }
+  .block h2 { font-size: var(--step-2); }
+  .head { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; flex-wrap: wrap; }
+  .head a { text-decoration: none; color: var(--accent); }
+
+  .topics {
+    list-style: none; margin: 0; padding: 0;
+    display: grid; gap: 1px;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+    background: var(--rule);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+  .topics li { background: var(--surface); padding: 1.25rem; display: grid; gap: 0.4rem; align-content: start; }
+  .topics h3 { font-size: 1.05rem; }
+  .topics p { margin: 0; color: var(--muted); font-size: 0.95rem; line-height: 1.5; }
+
+  .author {
+    display: grid;
+    gap: 1.5rem;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+    border-top: 1px solid var(--rule);
+    padding-top: 2rem;
+  }
+  .author p { margin: 0; }
+  .role { color: var(--muted); font-family: var(--font-display); }
+  .author-body { display: grid; gap: 1rem; max-width: var(--measure); }
+  .links { display: flex; flex-wrap: wrap; gap: 1.25rem; font-family: var(--font-display); font-weight: 500; }
+  @media (max-width: 40rem) { .author { grid-template-columns: 1fr; } }
+</style>

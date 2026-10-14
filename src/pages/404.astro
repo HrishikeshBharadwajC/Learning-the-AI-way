@@ -1,0 +1,17 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base title="Page not found">
+  <section class="frame page">
+    <p class="label">404</p>
+    <h1>This page doesn't exist.</h1>
+    <p>It may have moved, or the link has a typo. Try the <a href="/blog/">list of posts</a> or go back <a href="/">home</a>.</p>
+  </section>
+</Base>
+
+<style>
+  .page { padding-block: clamp(3rem, 9vw, 6rem); display: grid; gap: 1rem; }
+  .page p { margin: 0; }
+  h1 { font-size: var(--step-3); }
+</style>

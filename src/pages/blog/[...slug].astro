@@ -1,0 +1,76 @@
+---
+import { render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import { getPosts, formatDate, isoDate, readingStats, slugifyTag, type Post } from '../../utils';
+import { AUTHOR } from '../../site.config';
+
+export async function getStaticPaths() {
+  const posts = await getPosts();
+  return posts.map((post, i) => ({
+    params: { slug: post.id },
+    props: { post, newer: posts[i - 1], older: posts[i + 1] },
+  }));
+}
+
+interface Props { post: Post; newer?: Post; older?: Post }
+const { post, newer, older } = Astro.props;
+const { Content } = await render(post);
+const { minutes, tokens } = readingStats(post.body);
+---
+
+<Base title={post.data.title} description={post.data.description} type="article">
+  <article class="frame post">
+    <header>
+      <p class="meta">
+        <time datetime={isoDate(post.data.date)}>{formatDate(post.data.date)}</time>
+        <span aria-hidden="true"> · </span>{minutes} min read
+        <span aria-hidden="true"> · </span><span title="Rough size if you pasted this post into a model">≈{tokens.toLocaleString('en-US')} tokens</span>
+      </p>
+      <h1>{post.data.title}</h1>
+      <p class="desc">{post.data.description}</p>
+      {post.data.updated && (
+        <p class="meta">Updated <time datetime={isoDate(post.data.updated)}>{formatDate(post.data.updated)}</time></p>
+      )}
+    </header>
+
+    <div class="prose">
+      <Content />
+    </div>
+
+    <footer class="post-foot">
+      {post.data.tags.length > 0 && (
+        <ul class="tags">
+          {post.data.tags.map((t) => <li><a href={`/tags/${slugifyTag(t)}/`}>#{t}</a></li>)}
+        </ul>
+      )}
+      <p class="byline">Written by <a href="/about/">{AUTHOR.name}</a>. Say hi on <a href={AUTHOR.links.linkedin} target="_blank" rel="noopener">LinkedIn</a>.</p>
+      <nav class="pager" aria-label="More posts">
+        {older ? <a href={`/blog/${older.id}/`}><span class="label">← Older</span>{older.data.title}</a> : <span></span>}
+        {newer && <a class="next" href={`/blog/${newer.id}/`}><span class="label">Newer →</span>{newer.data.title}</a>}
+      </nav>
+    </footer>
+  </article>
+</Base>
+
+<style>
+  .post { padding-block: clamp(2.5rem, 7vw, 4.5rem); display: grid; gap: 2.5rem; }
+  header { display: grid; gap: 0.75rem; max-width: var(--measure); }
+  header p { margin: 0; }
+  h1 { font-size: var(--step-4); letter-spacing: -0.025em; }
+  .desc { font-size: var(--step-1); color: var(--muted); line-height: 1.45; }
+  .post-foot { display: grid; gap: 1.5rem; max-width: var(--measure); border-top: 1px solid var(--rule); padding-top: 1.5rem; }
+  .post-foot p { margin: 0; }
+  .tags { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .tags a {
+    font-family: var(--font-mono); font-size: 0.75rem; color: var(--accent);
+    background: var(--accent-soft); padding: 0.1rem 0.45rem; border-radius: 4px; text-decoration: none;
+  }
+  .byline { color: var(--muted); }
+  .pager { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr)); gap: 1rem; }
+  .pager a {
+    display: grid; gap: 0.25rem; padding: 1rem; border: 1px solid var(--rule); border-radius: var(--radius);
+    background: var(--surface); color: var(--ink); text-decoration: none; font-family: var(--font-display); font-weight: 500;
+  }
+  .pager a:hover { border-color: var(--accent); }
+  .pager .next { text-align: right; }
+</style>
