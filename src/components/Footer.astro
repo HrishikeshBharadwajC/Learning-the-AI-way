@@ -5,7 +5,7 @@ const year = new Date().getFullYear();
 
 <footer class="site-footer">
   <div class="frame row">
-    <p class="meta">© {year} {AUTHOR.name} · {SITE.title}</p>
+    <p>© {year} {AUTHOR.name} · {SITE.title}</p>
     <ul class="links">
       <li><a href={AUTHOR.links.linkedin} rel="me noopener" target="_blank">LinkedIn</a></li>
       <li><a href={AUTHOR.links.website} rel="me noopener" target="_blank">Website</a></li>
@@ -15,7 +15,7 @@ const year = new Date().getFullYear();
 </footer>
 
 <style>
-  .site-footer { border-top: 1px solid var(--rule); margin-top: 5rem; }
+  .site-footer { border-top: 1px solid var(--line); margin-top: 5rem; }
   .row {
     display: flex;
     justify-content: space-between;
@@ -23,9 +23,11 @@ const year = new Date().getFullYear();
     gap: 1rem;
     flex-wrap: wrap;
     padding-block: 1.75rem;
+    font-size: 0.875rem;
+    color: var(--muted);
   }
   .row p { margin: 0; }
   .links { list-style: none; margin: 0; padding: 0; display: flex; gap: 1.25rem; }
-  .links a { font-family: var(--font-mono); font-size: 0.8rem; color: var(--muted); text-decoration: none; }
-  .links a:hover { color: var(--accent); }
+  .links a { color: var(--muted); font-weight: 600; text-decoration: none; }
+  .links a:hover { color: var(--ink); }
 </style>

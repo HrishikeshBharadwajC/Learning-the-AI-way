@@ -11,92 +11,43 @@ const isActive = (href: string) => path.startsWith(href);
 
 <header class="site-header">
   <div class="frame bar">
-    <a class="brand" href="/" aria-label={`${SITE.title}, home`}>
-      <span class="mark" aria-hidden="true">&gt;_</span>
-      <span>{SITE.title}</span>
-    </a>
+    <a class="brand" href="/" aria-label={`${SITE.title}, home`}>Learning the <span>AI</span> Way</a>
     <nav aria-label="Main">
       {nav.map((item) => (
         <a href={item.href} aria-current={isActive(item.href) ? 'page' : undefined}>{item.label}</a>
       ))}
-      <button id="theme-toggle" type="button" aria-label="Toggle dark mode" title="Toggle dark mode">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-          <circle cx="12" cy="12" r="5"></circle>
-          <path d="M12 1v2M12 21v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M1 12h2M21 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4"></path>
-        </svg>
-      </button>
     </nav>
   </div>
 </header>
 
-<script>
-  const btn = document.getElementById('theme-toggle');
-  btn?.addEventListener('click', () => {
-    const root = document.documentElement;
-    const current = root.dataset.theme ?? (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-    const next = current === 'dark' ? 'light' : 'dark';
-    root.dataset.theme = next;
-    try { localStorage.setItem('theme', next); } catch {}
-  });
-</script>
-
 <style>
-  .site-header {
-    border-bottom: 1px solid var(--rule);
-    background: color-mix(in srgb, var(--paper) 88%, transparent);
-    backdrop-filter: blur(6px);
-    position: sticky;
-    top: 0;
-    z-index: 10;
-  }
+  .site-header { background: var(--bar); color: var(--on-dark); }
   .bar {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 1rem;
+    gap: 0.5rem 1.5rem;
     flex-wrap: wrap;
-    padding-block: 0.85rem;
+    padding-block: 0.9rem;
   }
   .brand {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.55rem;
-    font-family: var(--font-display);
-    font-weight: 700;
-    font-size: 1.05rem;
-    color: var(--ink);
-    text-decoration: none;
+    font-family: var(--font-head);
+    font-weight: 800;
+    font-size: 1.1rem;
     letter-spacing: -0.01em;
-  }
-  .mark {
-    font-family: var(--font-mono);
-    font-size: 0.8rem;
-    font-weight: 500;
-    color: var(--paper);
-    background: var(--accent);
-    padding: 0.1rem 0.35rem;
-    border-radius: 4px;
-  }
-  nav { display: flex; align-items: center; gap: 1.25rem; }
-  nav a {
-    font-family: var(--font-display);
-    font-weight: 500;
-    font-size: 0.95rem;
-    color: var(--muted);
+    color: var(--on-dark);
     text-decoration: none;
   }
-  nav a:hover, nav a[aria-current='page'] { color: var(--ink); }
-  nav a[aria-current='page'] { box-shadow: inset 0 -2px 0 var(--accent); }
-  #theme-toggle {
-    display: grid;
-    place-items: center;
-    width: 2rem;
-    height: 2rem;
-    border: 1px solid var(--rule);
-    border-radius: 50%;
-    background: var(--surface);
-    color: var(--muted);
-    cursor: pointer;
+  .brand span { color: var(--mustard); }
+  nav { display: flex; gap: 1.5rem; }
+  nav a {
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--on-dark);
+    opacity: 0.85;
+    text-decoration: none;
+    padding-block: 0.15rem;
   }
-  #theme-toggle:hover { color: var(--ink); }
+  nav a:hover { opacity: 1; color: var(--on-dark); }
+  nav a[aria-current='page'] { opacity: 1; box-shadow: inset 0 -2px 0 var(--mustard); }
 </style>

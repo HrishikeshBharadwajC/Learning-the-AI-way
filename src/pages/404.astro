@@ -3,15 +3,19 @@ import Base from '../layouts/Base.astro';
 ---
 
 <Base title="Page not found">
-  <section class="frame page">
-    <p class="label">404</p>
-    <h1>This page doesn't exist.</h1>
-    <p>It may have moved, or the link has a typo. Try the <a href="/blog/">list of posts</a> or go back <a href="/">home</a>.</p>
+  <section class="band">
+    <div class="frame page">
+      <p class="kicker">404</p>
+      <h1>This page doesn't exist.</h1>
+      <p>It may have moved, or the link has a typo.</p>
+      <div class="actions"><a class="btn" href="/blog/">See all posts</a><a class="btn ghost" href="/">Go home</a></div>
+    </div>
   </section>
 </Base>
 
 <style>
-  .page { padding-block: clamp(3rem, 9vw, 6rem); display: grid; gap: 1rem; }
+  .page { padding-block: clamp(3rem, 9vw, 5rem); display: grid; gap: 0.9rem; }
   .page p { margin: 0; }
   h1 { font-size: var(--step-3); }
+  .actions { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 0.4rem; }
 </style>

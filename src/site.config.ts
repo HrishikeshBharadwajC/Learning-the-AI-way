@@ -1,7 +1,7 @@
 // Edit this file to change site-wide details: your name, bio and links.
 export const SITE = {
   title: 'Learning the AI Way',
-  tagline: 'Field notes from an AI engineer on using AI in everyday work and life.',
+  tagline: 'Practical notes on using AI in everyday work and life.',
   url: 'https://learningtheaiway.com',
   author: 'Hrishikesh Chakrapani',
 };

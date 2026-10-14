@@ -8,22 +8,26 @@ const tags = [...new Set(posts.flatMap((p) => p.data.tags))].sort();
 ---
 
 <Base title="Writing" description="Every post on Learning the AI Way, newest first.">
-  <section class="frame page">
-    <p class="label">Writing</p>
-    <h1>All posts</h1>
-    {tags.length > 0 && (
-      <ul class="tags" aria-label="Browse by tag">
-        {tags.map((t) => <li><a href={`/tags/${slugifyTag(t)}/`}>#{t}</a></li>)}
-      </ul>
-    )}
+  <section class="band">
+    <div class="frame top">
+      <p class="kicker">Writing</p>
+      <h1>All posts</h1>
+      {tags.length > 0 && (
+        <ul class="tags" aria-label="Browse by tag">
+          {tags.map((t) => <li><a class="tag" href={`/tags/${slugifyTag(t)}/`}>{t}</a></li>)}
+        </ul>
+      )}
+    </div>
+  </section>
+  <section class="frame list">
     <PostList posts={posts} />
   </section>
 </Base>
 
 <style>
-  .page { padding-block: clamp(2.5rem, 7vw, 4.5rem); display: grid; gap: 1.25rem; }
+  .top { padding-block: clamp(2.25rem, 6vw, 3.5rem); display: grid; gap: 0.75rem; }
+  .top p { margin: 0; }
   h1 { font-size: var(--step-3); }
-  .tags { list-style: none; margin: 0 0 1rem; padding: 0; display: flex; flex-wrap: wrap; gap: 0.5rem; }
-  .tags a { font-family: var(--font-mono); font-size: 0.8rem; color: var(--accent); text-decoration: none; }
-  .tags a:hover { text-decoration: underline; }
+  .tags { list-style: none; margin: 0.25rem 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .list { padding-top: 2rem; }
 </style>
