@@ -9,20 +9,20 @@ export const SITE = {
 
 export const AUTHOR = {
   name: 'Hrishikesh Chakrapani',
-  role: 'AI Engineer',
+  role: 'Principal Engineer at HPE',
   // Short bio. The first paragraph also appears on the home page.
   bio: [
-    "I'm an AI engineer who builds products on top of large language models. My work spans prompt design, retrieval, agents and the evaluation that keeps them honest.",
-    'Outside of work I use the same tools to plan, write and learn, and I pay close attention to where they help and where they get in the way.',
+    "I'm a principal engineer at HPE, where I work on agentic systems, large language models and new AI systems. I started out in classical machine learning and have spent the last three years building in generative AI.",
+    "I love reading about what's new in the field: model architectures, training methods and entirely new model families. This blog is where I write down what I learn.",
   ],
   // Areas listed under "What I work on" on the About page.
   focus: [
-    { title: 'LLM applications', text: 'Designing and shipping features built on language models.' },
-    { title: 'Agents and tools', text: 'Giving models tools and the guardrails to use them well.' },
-    { title: 'Retrieval', text: 'Getting the right context in front of a model at the right time.' },
-    { title: 'Evaluation', text: 'Measuring quality so changes are decisions, not guesses.' },
+    { title: 'Agentic systems', text: 'Designing agents that plan, use tools and recover from their mistakes.' },
+    { title: 'Large language models', text: 'Building production features on top of LLMs.' },
+    { title: 'New AI systems', text: 'Evaluating and adopting new models and approaches as they arrive.' },
+    { title: 'Classical ML roots', text: 'Bringing lessons from traditional machine learning into generative AI.' },
   ],
-  why: "AI moves fast and most writing about it is either hype or theory. I wanted a place to write down what actually works day to day, with real prompts, real workflows and honest results, so others can skip the trial and error.",
+  why: "AI moves fast. New model families, training methods and agent patterns show up every few weeks, and most writing about them is either hype or theory. I wanted one place to write down what I learn as I build and read: what works, why it works, and what didn't, so others can learn faster too.",
   links: {
     linkedin: 'https://www.linkedin.com/in/hrishikeshbharadwaj',
     website: 'https://hrishikesh-chakrapani.carrd.co/',
@@ -31,17 +31,17 @@ export const AUTHOR = {
 
 // "What I write about" on the home page.
 export const TOPICS = [
-  { name: 'Everyday AI', text: 'How I use assistants to plan, write, research and decide, outside of work.' },
-  { name: 'Building with LLMs', text: 'Prompts, evals, retrieval and agents, written up from real projects.' },
-  { name: 'Tools & workflows', text: 'The editors, CLIs and automations that save me hours each week.' },
-  { name: 'Learning faster', text: 'Using AI as a tutor to pick up new fields without fooling myself.' },
+  { name: 'Agentic systems', text: 'How agents plan, call tools and fail, from building them at work.' },
+  { name: 'Inside new models', text: 'New architectures, training methods and model families, explained plainly.' },
+  { name: 'Building with LLMs', text: 'Prompts, retrieval and evaluation, written up from real projects.' },
+  { name: 'Everyday AI', text: 'How I use AI outside work to plan, write and learn faster.' },
 ];
 
 // "Coming soon" on the home page. Remove a title once the post is published,
 // or empty the list to hide the section.
 export const COMING_SOON = [
+  'What makes an agent reliable in production',
+  'From classical ML to generative AI: what carried over',
+  'New model architectures, explained for engineers',
   'My daily AI workflow, step by step',
-  'Write prompts like specs',
-  'What evals taught me about my own code',
-  'Using AI as a tutor without fooling myself',
 ];

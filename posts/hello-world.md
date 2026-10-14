@@ -5,16 +5,16 @@ date: 2026-10-14
 tags: [meta, everyday-ai]
 ---
 
-I work as an AI engineer, so I spend my days building with large language models. Over the last year I noticed something: the most useful things I've learned about AI didn't come from papers or launch posts. They came from using it, every day, for ordinary things, and paying attention to what worked.
+I'm a principal engineer at HPE, and I spend my days building agentic systems on top of large language models. After years in classical machine learning and the last three in generative AI, I've noticed something: the most useful things I've learned about AI didn't come from papers or launch posts. They came from using it, every day, for ordinary things, and paying attention to what worked.
 
 This blog is where I'll write those lessons down.
 
 ## What you'll find here
 
-- **Everyday AI.** How I use assistants to plan a week, draft an email, or think through a decision.
-- **Building with LLMs.** Notes from real projects: prompts, evaluations, retrieval, agents, and the failures that taught me the most.
-- **Tools and workflows.** The setups that save me real time, with enough detail that you can copy them.
-- **Learning faster.** Using a model as a tutor without letting it do the thinking for me.
+- **Agentic systems.** How agents plan, call tools and fail, from building them at work.
+- **Inside new models.** New architectures, training methods and model families, explained plainly.
+- **Building with LLMs.** Notes from real projects: prompts, retrieval, evaluation, and the failures that taught me the most.
+- **Everyday AI.** How I use AI outside work to plan, write and learn faster.
 
 ## How I'll write
 
