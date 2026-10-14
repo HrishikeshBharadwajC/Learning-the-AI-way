@@ -34,7 +34,7 @@ draft: false        # true keeps it off the live site
 
 ## Edit your details
 
-Name, short bio, LinkedIn and website links live in [`src/site.config.ts`](src/site.config.ts).
+Name, bio, "What I work on", "Why this blog", LinkedIn and website links, the home page topics and the "Coming soon" list all live in [`src/site.config.ts`](src/site.config.ts). Remove a "Coming soon" title once you publish that post.
 
 ## Project layout
 
