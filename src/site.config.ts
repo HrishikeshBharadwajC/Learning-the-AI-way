@@ -12,8 +12,8 @@ export const AUTHOR = {
   role: 'Principal Engineer at HPE',
   // Short bio. The first paragraph also appears on the home page.
   bio: [
-    "I'm a principal engineer at HPE, where I work on agentic systems, large language models and new AI systems. I started out in classical machine learning and have spent the last three years building in generative AI.",
-    "I love reading about what's new in the field: model architectures, training methods and entirely new model families. This blog is where I write down what I learn.",
+    "I read papers for fun and build agents for work. I'm a principal engineer at HPE, with a classical machine learning background and three years in generative AI.",
+    'Day to day I work on agentic systems, large language models and new AI systems, and I follow new model architectures, training methods and model families closely. This blog is where I write down what I learn.',
   ],
   // Areas listed under "What I work on" on the About page.
   focus: [
@@ -42,6 +42,6 @@ export const TOPICS = [
 export const COMING_SOON = [
   'What makes an agent reliable in production',
   'From classical ML to generative AI: what carried over',
-  'New model architectures, explained for engineers',
-  'My daily AI workflow, step by step',
+  'System One models, explained',
+  'Development practices in the age of coding agents',
 ];
