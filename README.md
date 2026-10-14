@@ -34,7 +34,7 @@ draft: false        # true keeps it off the live site
 
 ## Edit your details
 
-Name, bio, LinkedIn and website links live in [`src/site.config.ts`](src/site.config.ts).
+Name, short bio, LinkedIn and website links live in [`src/site.config.ts`](src/site.config.ts).
 
 ## Project layout
 

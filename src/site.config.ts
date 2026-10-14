@@ -9,15 +9,13 @@ export const SITE = {
 export const AUTHOR = {
   name: 'Hrishikesh Chakrapani',
   role: 'AI Engineer',
-  // Short intro shown on the home page and the About page. Edit freely.
+  // Short intro shown on the home page. Edit freely.
   bio: [
     "I'm an AI engineer. I build with large language models during the day and keep using them after hours, to plan, to write, to learn faster, and to automate the boring parts.",
     'This blog is where I write down what actually works: the prompts, the tools, the workflows and the mistakes. Practical notes, not hype.',
   ],
   links: {
-    // TODO: replace with your LinkedIn profile URL.
-    linkedin: 'https://www.linkedin.com/in/',
+    linkedin: 'https://www.linkedin.com/in/hrishikeshbharadwaj',
     website: 'https://hrishikesh-chakrapani.carrd.co/',
-    github: 'https://github.com/hrishikeshbharadwajc',
   },
 };
