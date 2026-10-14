@@ -1,0 +1,82 @@
+---
+import { render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import { getPosts, formatDate, isoDate, readingStats, slugifyTag, type Post } from '../../utils';
+import { AUTHOR } from '../../site.config';
+
+export async function getStaticPaths() {
+  const posts = await getPosts();
+  return posts.map((post, i) => ({
+    params: { slug: post.id },
+    props: { post, newer: posts[i - 1], older: posts[i + 1] },
+  }));
+}
+
+interface Props { post: Post; newer?: Post; older?: Post }
+const { post, newer, older } = Astro.props;
+const { Content } = await render(post);
+const { minutes, tokens } = readingStats(post.body);
+---
+
+<Base title={post.data.title} description={post.data.description} type="article">
+  <article>
+    <header class="post-head">
+      <div class="frame inner">
+        <p class="meta">
+          <time datetime={isoDate(post.data.date)}>{formatDate(post.data.date)}</time>
+          · {minutes} min read
+          · <span title="Rough size if you pasted this post into a model">≈{tokens.toLocaleString('en-US')} tokens</span>
+          {post.data.updated && <> · Updated <time datetime={isoDate(post.data.updated)}>{formatDate(post.data.updated)}</time></>}
+        </p>
+        <h1>{post.data.title}</h1>
+        <p class="desc">{post.data.description}</p>
+        {post.data.tags.length > 0 && (
+          <ul class="tags">
+            {post.data.tags.map((t) => <li><a class="tag" href={`/tags/${slugifyTag(t)}/`}>{t}</a></li>)}
+          </ul>
+        )}
+      </div>
+    </header>
+
+    <div class="frame body">
+      <div class="prose">
+        <Content />
+      </div>
+
+      <footer class="post-foot">
+        <p class="byline">Written by <a href="/about/">{AUTHOR.name}</a>. Say hi on <a href={AUTHOR.links.linkedin} target="_blank" rel="noopener">LinkedIn</a>.</p>
+        {(older || newer) && (
+          <nav class="pager" aria-label="More posts">
+            {older ? <a href={`/blog/${older.id}/`}><span class="label">← Older</span>{older.data.title}</a> : <span></span>}
+            {newer && <a class="next" href={`/blog/${newer.id}/`}><span class="label">Newer →</span>{newer.data.title}</a>}
+          </nav>
+        )}
+      </footer>
+    </div>
+  </article>
+</Base>
+
+<style>
+  .post-head { background: var(--mustard-soft); color: var(--bar); }
+  .inner { padding-block: clamp(2.5rem, 6vw, 3.75rem); display: grid; gap: 0.8rem; }
+  .inner > * { max-width: 48rem; }
+  .inner p { margin: 0; }
+  .post-head .meta { color: var(--bar); opacity: 0.75; }
+  h1 { font-size: var(--step-4); letter-spacing: -0.03em; }
+  .desc { font-size: var(--step-1); line-height: 1.45; opacity: 0.85; }
+  .tags { list-style: none; margin: 0.2rem 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .post-head .tag { background: var(--bar); color: var(--mustard-soft); }
+  .post-head .tag:hover { background: var(--slate); color: var(--on-dark); }
+
+  .body { padding-top: clamp(2rem, 5vw, 3rem); display: grid; gap: 3rem; }
+  .post-foot { display: grid; gap: 1.5rem; max-width: var(--measure); border-top: 1px solid var(--line); padding-top: 1.5rem; }
+  .post-foot p { margin: 0; }
+  .byline { color: var(--muted); }
+  .pager { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr)); gap: 1rem; }
+  .pager a {
+    display: grid; gap: 0.25rem; padding: 1rem 1.1rem; border: 1px solid var(--line); border-radius: var(--radius);
+    background: var(--paper); color: var(--ink); text-decoration: none; font-family: var(--font-head); font-weight: 600;
+  }
+  .pager a:hover { border-color: var(--slate); }
+  .pager .next { text-align: right; }
+</style>

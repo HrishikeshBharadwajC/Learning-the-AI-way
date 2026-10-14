@@ -1,0 +1,33 @@
+---
+import Base from '../../layouts/Base.astro';
+import PostList from '../../components/PostList.astro';
+import { getPosts, slugifyTag } from '../../utils';
+
+const posts = await getPosts();
+const tags = [...new Set(posts.flatMap((p) => p.data.tags))].sort();
+---
+
+<Base title="Writing" description="Every post on Learning the AI Way, newest first.">
+  <section class="band">
+    <div class="frame top">
+      <p class="kicker">Writing</p>
+      <h1>All posts</h1>
+      {tags.length > 0 && (
+        <ul class="tags" aria-label="Browse by tag">
+          {tags.map((t) => <li><a class="tag" href={`/tags/${slugifyTag(t)}/`}>{t}</a></li>)}
+        </ul>
+      )}
+    </div>
+  </section>
+  <section class="frame list">
+    <PostList posts={posts} />
+  </section>
+</Base>
+
+<style>
+  .top { padding-block: clamp(2.25rem, 6vw, 3.5rem); display: grid; gap: 0.75rem; }
+  .top p { margin: 0; }
+  h1 { font-size: var(--step-3); }
+  .tags { list-style: none; margin: 0.25rem 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .list { padding-top: 2rem; }
+</style>

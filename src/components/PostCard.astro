@@ -1,0 +1,42 @@
+---
+import type { Post } from '../utils';
+import { formatDate, isoDate, readingStats, slugifyTag } from '../utils';
+
+interface Props { post: Post }
+const { post } = Astro.props;
+const { minutes } = readingStats(post.body);
+---
+
+<article class="card">
+  <p class="meta">
+    <time datetime={isoDate(post.data.date)}>{formatDate(post.data.date)}</time> · {minutes} min read
+    {post.data.draft && <span class="draft">draft</span>}
+  </p>
+  <h3><a href={`/blog/${post.id}/`}>{post.data.title}</a></h3>
+  <p class="desc">{post.data.description}</p>
+  {post.data.tags.length > 0 && (
+    <ul class="tags">
+      {post.data.tags.map((t) => <li><a class="tag" href={`/tags/${slugifyTag(t)}/`}>{t}</a></li>)}
+    </ul>
+  )}
+</article>
+
+<style>
+  .card {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 1.25rem 1.35rem;
+    display: grid;
+    gap: 0.45rem;
+    align-content: start;
+    min-width: 0;
+  }
+  .card p { margin: 0; }
+  h3 { font-size: 1.2rem; }
+  h3 a { color: var(--ink); text-decoration: none; }
+  h3 a:hover { text-decoration: underline; text-decoration-color: var(--mustard); }
+  .desc { color: var(--muted); font-size: 0.95rem; line-height: 1.55; }
+  .tags { list-style: none; margin: 0.2rem 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .draft { margin-left: 0.4rem; text-transform: uppercase; letter-spacing: 0.08em; border: 1px solid currentColor; padding: 0 0.3rem; border-radius: 3px; font-size: 0.7rem; }
+</style>

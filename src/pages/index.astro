@@ -1,0 +1,157 @@
+---
+import Base from '../layouts/Base.astro';
+import PostCard from '../components/PostCard.astro';
+import { SITE, AUTHOR, TOPICS, COMING_SOON } from '../site.config';
+import { getPosts, formatDate, isoDate, readingStats } from '../utils';
+
+const posts = await getPosts();
+const [newest, ...rest] = posts;
+const more = rest.slice(0, 6);
+---
+
+<Base>
+  <section class="band">
+    <div class="frame hero">
+      <div class="intro">
+        <p class="kicker">Field notes from an AI engineer</p>
+        <h1>{SITE.title}</h1>
+        <p class="lede">{SITE.tagline}</p>
+        <div class="actions">
+          <a class="btn" href="/blog/">Read the blog</a>
+          <a class="btn ghost" href="/about/">About me</a>
+        </div>
+      </div>
+      {newest && (
+        <a class="feature" href={`/blog/${newest.id}/`}>
+          <span class="meta">Newest · <time datetime={isoDate(newest.data.date)}>{formatDate(newest.data.date)}</time> · {readingStats(newest.body).minutes} min read</span>
+          <span class="f-title">{newest.data.title}</span>
+          <span class="f-desc">{newest.data.description}</span>
+          <span class="f-cta">Read post →</span>
+        </a>
+      )}
+    </div>
+  </section>
+
+  {more.length > 0 && (
+    <section class="frame more" aria-labelledby="more">
+      <div class="head">
+        <h2 id="more">More writing</h2>
+        <a href="/blog/">All posts</a>
+      </div>
+      <div class="cards">
+        {more.map((post) => <PostCard post={post} />)}
+      </div>
+    </section>
+  )}
+
+  <section class="frame block" aria-labelledby="topics">
+    <h2 id="topics">What I write about</h2>
+    <ul class="topics">
+      {TOPICS.map((t) => (
+        <li>
+          <h3>{t.name}</h3>
+          <p>{t.text}</p>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  {COMING_SOON.length > 0 && (
+    <section class="frame block" aria-labelledby="soon">
+      <div class="head">
+        <h2 id="soon">Coming soon</h2>
+        <a href="/rss.xml">Follow via RSS</a>
+      </div>
+      <ul class="soon">
+        {COMING_SOON.map((title) => (
+          <li><span class="pill">Planned</span><span>{title}</span></li>
+        ))}
+      </ul>
+    </section>
+  )}
+
+  <section class="me" aria-labelledby="me">
+    <div class="frame me-inner">
+      <div>
+        <p class="label">Who's writing</p>
+        <h2 id="me">{AUTHOR.name}</h2>
+        <p class="role">{AUTHOR.role}</p>
+      </div>
+      <div class="me-body">
+        <p>{AUTHOR.bio[0]}</p>
+        <div class="me-links">
+          <a class="btn dark" href="/about/">More about me</a>
+          <a href={AUTHOR.links.linkedin} target="_blank" rel="me noopener">LinkedIn ↗</a>
+          <a href={AUTHOR.links.website} target="_blank" rel="me noopener">Personal website ↗</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+    gap: 2.5rem;
+    align-items: center;
+    padding-block: clamp(2.75rem, 7vw, 4.5rem);
+  }
+  .intro { display: grid; gap: 0.9rem; }
+  .intro p { margin: 0; }
+  h1 { font-size: var(--step-4); letter-spacing: -0.03em; }
+  .lede { font-size: var(--step-1); line-height: 1.5; opacity: 0.92; max-width: 32rem; }
+  .actions { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 0.4rem; }
+
+  .feature {
+    display: grid;
+    gap: 0.55rem;
+    background: var(--mustard-soft);
+    color: var(--bar);
+    border-radius: var(--radius);
+    padding: 1.5rem 1.6rem;
+    text-decoration: none;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .feature:hover { color: var(--bar); transform: translateY(-2px); box-shadow: 0 10px 24px rgba(20, 28, 36, 0.25); }
+  .feature .meta { color: var(--bar); opacity: 0.75; }
+  .f-title { font-family: var(--font-head); font-weight: 800; font-size: var(--step-2); line-height: 1.12; letter-spacing: -0.02em; text-wrap: balance; }
+  .f-desc { font-size: 0.98rem; line-height: 1.55; opacity: 0.85; }
+  .f-cta { font-weight: 600; font-size: 0.9rem; margin-top: 0.2rem; }
+
+  .more, .block { padding-block: 3rem 0; display: grid; gap: 1.25rem; }
+  .block h2 { font-size: var(--step-2); }
+
+  .topics {
+    list-style: none; margin: 0; padding: 0;
+    display: grid; gap: 1.25rem;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
+  }
+  .topics li { display: grid; gap: 0.45rem; align-content: start; padding-top: 1rem; border-top: 3px solid var(--slate); }
+  .topics h3 { font-size: 1.1rem; }
+  .topics p { margin: 0; color: var(--muted); font-size: 0.95rem; line-height: 1.55; }
+
+  .soon { list-style: none; margin: 0; padding: 0; background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius); }
+  .soon li { display: flex; align-items: center; gap: 0.9rem; padding: 0.9rem 1.2rem; font-family: var(--font-head); font-weight: 600; font-size: 1.05rem; }
+  .soon li + li { border-top: 1px solid var(--line); }
+  .pill { flex: none; font-family: var(--font-mono); font-weight: 400; font-size: 0.7rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--slate); border: 1px solid var(--slate); border-radius: 999px; padding: 0 0.5rem; }
+
+  .me { background: var(--mustard-soft); color: var(--bar); margin-top: 4rem; margin-bottom: -4rem; }
+  .me-inner { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: 2rem; padding-block: 2.75rem; }
+  .me p { margin: 0; }
+  .me .label { color: var(--bar); opacity: 0.7; }
+  .me h2 { font-size: var(--step-2); margin-top: 0.3rem; }
+  .role { font-weight: 600; opacity: 0.8; }
+  .me-body { display: grid; gap: 1.1rem; max-width: var(--measure); font-size: 1.05rem; }
+  .me-links { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem 1.4rem; }
+  .me-links a:not(.btn) { color: var(--bar); font-weight: 600; text-decoration-color: var(--bar); }
+  .btn.dark { background: var(--bar); color: var(--on-dark); }
+  .btn.dark:hover { background: var(--slate); color: var(--on-dark); }
+  @media (max-width: 40rem) { .me-inner { grid-template-columns: 1fr; gap: 1rem; } }
+  .head { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; flex-wrap: wrap; }
+  .head h2 { font-size: var(--step-2); }
+  .head a { font-weight: 600; }
+  .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 22rem), 1fr)); gap: 1.25rem; }
+
+  @media (max-width: 52rem) { .hero { grid-template-columns: 1fr; } }
+</style>

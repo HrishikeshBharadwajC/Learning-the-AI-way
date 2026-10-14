@@ -1,0 +1,53 @@
+---
+import { SITE } from '../site.config';
+
+const path = Astro.url.pathname;
+const nav = [
+  { href: '/blog/', label: 'Writing' },
+  { href: '/about/', label: 'About' },
+];
+const isActive = (href: string) => path.startsWith(href);
+---
+
+<header class="site-header">
+  <div class="frame bar">
+    <a class="brand" href="/" aria-label={`${SITE.title}, home`}>Learning the <span>AI</span> Way</a>
+    <nav aria-label="Main">
+      {nav.map((item) => (
+        <a href={item.href} aria-current={isActive(item.href) ? 'page' : undefined}>{item.label}</a>
+      ))}
+    </nav>
+  </div>
+</header>
+
+<style>
+  .site-header { background: var(--bar); color: var(--on-dark); }
+  .bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem 1.5rem;
+    flex-wrap: wrap;
+    padding-block: 0.9rem;
+  }
+  .brand {
+    font-family: var(--font-head);
+    font-weight: 800;
+    font-size: 1.1rem;
+    letter-spacing: -0.01em;
+    color: var(--on-dark);
+    text-decoration: none;
+  }
+  .brand span { color: var(--mustard); }
+  nav { display: flex; gap: 1.5rem; }
+  nav a {
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--on-dark);
+    opacity: 0.85;
+    text-decoration: none;
+    padding-block: 0.15rem;
+  }
+  nav a:hover { opacity: 1; color: var(--on-dark); }
+  nav a[aria-current='page'] { opacity: 1; box-shadow: inset 0 -2px 0 var(--mustard); }
+</style>
